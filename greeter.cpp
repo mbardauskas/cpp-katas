@@ -29,6 +29,12 @@ std::string Greeter::getGreeting(int timeRepresentationHours) {
   if (timeRepresentationHours >= 6 && timeRepresentationHours < 12) {
     return "Good morning";
   }
+  if (timeRepresentationHours >= 18 && timeRepresentationHours < 22) {
+    return "Good evening";
+  }
+  if (timeRepresentationHours >= 22 || timeRepresentationHours < 6) {
+    return "Good night";
+  }
   return "Hello";
 }
 
