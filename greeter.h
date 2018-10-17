@@ -1,16 +1,18 @@
 #include <string>
 #include <iostream>
 
-using TimeGetter = std::function<int()>;
+typedef std::function<int()> TimeGetter;
+typedef std::function<void(std::string)> Logger;
 
 class Greeter {
   public:
-    Greeter(const TimeGetter& timeGetter) : timeGetter(timeGetter) {}
+    Greeter(TimeGetter const& timeGetter, Logger const& logger) : timeGetter(timeGetter), logger(logger) {}
     std::string greet(std::string name);
 
   private:
     TimeGetter timeGetter;
-    std::string capitalize(std::string name);
-    std::string getGreeting(int timeRepresentationHours);
+    Logger logger;
+    std::string capitalizeFirstLetter(std::string const& name) const;
+    std::string getGreeting(int const& timeRepresentationHours) const;
 };
 

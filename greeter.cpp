@@ -2,6 +2,8 @@
 #include <boost/algorithm/string.hpp>
 #include "./greeter.h"
 
+using std::string;
+
 const auto TimeGetterImpl = []() {
   time_t rawtime;
   struct tm * timeinfo;
@@ -15,17 +17,19 @@ const auto TimeGetterImpl = []() {
   return std::stoi(buffer);
 };
 
-std::string Greeter::greet(std::string name) {
-  boost::trim(name);
-  return this->getGreeting(timeGetter()) + " " + this->capitalize(name);
+string Greeter::greet(string name) {
+  string processedName = capitalizeFirstLetter(boost::trim_copy(name));
+  return getGreeting(timeGetter()) + " " + processedName;
 }
 
-std::string Greeter::capitalize(std::string name) {
-  name[0] = toupper(name[0]);
-  return name;
+string Greeter::capitalizeFirstLetter(string const& name) const {
+  string firstLetter = name.substr(0, 1);
+  string remainingLetters = name.substr(1, name.size()-1);
+
+  return boost::to_upper_copy<string>(firstLetter) + remainingLetters;
 }
 
-std::string Greeter::getGreeting(int timeRepresentationHours) {
+string Greeter::getGreeting(int const& timeRepresentationHours) const {
   if (timeRepresentationHours >= 6 && timeRepresentationHours < 12) {
     return "Good morning";
   }
